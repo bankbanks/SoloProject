@@ -1,36 +1,36 @@
-import Register from '../pages/'
+import Register from '../pages/Register'
 
 
 
 const components = {
-  home: {
-    path: "/",
-    page: Home,
-  },
+  
 
   register: {
     path: "/register",
     page: Register,
   },
-  admin : {
-      path: '/admin',
-      page: admin
-  }
+
+  
+
+  // admin : {
+  //     path: '/admin',
+  //     page: admin
+  // }
 };
 
 
-const roles = {
-    GUEST: [
-        components.home,
-        components.register
-    ],
-    USER: [
+// const roles = {
+//     GUEST: [
+//         components.home,
+//         components.register
+//     ],
+//     USER: [
     
-    ],
-    ADMIN: [
-        component.admin
-    ]
-}
+//     ],
+//     ADMIN: [
+//         component.admin
+//     ]
+// }
 
 
-export default ReadonlySet;
+export default components;
