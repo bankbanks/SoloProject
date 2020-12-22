@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import axios from '../config/axios';
+import Top from "../components/Header/top";
 
 function Register(props) {
 
@@ -19,9 +20,22 @@ function Register(props) {
         password,
         
       })
+      .then(res => {
+        console.log(res);
+        window.location.reload(true);
+        alert("sign up completed")
+        
+      })
+      .catch(err=>{
+        console.log(err)
+        
+        
+      })
   }
 
   return (
+    <div>
+      <Top/>
     <form onSubmit={onSubmit}>
       <div className="register-form">
         <h3>Sign Up</h3>
@@ -34,7 +48,7 @@ function Register(props) {
             type="text"
             className="form-control"
             placeholder="First name"
-          />
+            />
         </div>
 
         <div className="form-group">
@@ -74,7 +88,7 @@ function Register(props) {
          
           // formValue={formValue} setFormValue={setFormValue}
           className="btn btn-primary btn-block"
-        >
+          >
           Sign Up
         </button>
         <p className="forgot-password text-right">
@@ -82,6 +96,10 @@ function Register(props) {
         </p>
       </div>
     </form>
+    <div style={{height:"100px"}}>
+
+    </div>
+          </div>
   );
 }
 

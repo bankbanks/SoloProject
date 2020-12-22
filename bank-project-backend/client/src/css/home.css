@@ -1,5 +1,8 @@
 .home{
-     background-image: url(../images/การศึกษา\ ภาพพื้นหลัง\ พาหะพื้นหลังและไฟล์\ PSD\ สำหรับดาวน์โหลดฟรี\ _\ Pngtree.jfif);
+     background-image: url(../images/School\ Blackboard\ Chalk\ Words\ Black\ Banner.jfif);
      background-repeat: no-repeat center fixed;
      background-size: cover;
+     /* background-color: #17573D; */
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap');

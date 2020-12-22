@@ -10,16 +10,13 @@ const register = async (req, res) => {
     password,
     
   } = req.body;
-    console.log('firstname', firstname)
-  if (!email) {
-    return res.status(400).send({ error: "no email provided" });
-  }
+   
 
   const targetUser = await db.User.findOne({ where: { email } });
 
   if (targetUser) {
     console.log("err");
-    res.status(400).send({ message: "User already taken" });
+    res.status(400).send({ message: "Email already taken" });
   } else {
     console.log("register");
     const salt = bcryptjs.genSaltSync(12);
