@@ -1,12 +1,19 @@
 import React, { useState } from "react";
-import { Form, Col, Button, InputGroup, Image, ProgressBar } from "react-bootstrap";
+import {
+  Form,
+  Col,
+  Button,
+  InputGroup,
+  Image,
+  ProgressBar,
+} from "react-bootstrap";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { withRouter } from "react-router-dom";
 import Top from "../components/Header/top";
 import axios from "../config/axios";
 import "../css/font.css";
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
 
 const schema = yup.object({
   fname: yup.string().required(),
@@ -32,23 +39,8 @@ function Tutor(props) {
   const [detail, setDetail] = useState("");
   const [gender, setGender] = useState("");
   const [loading, setLoading] = useState(false);
-  
-
-  const handleFile = (e) => {
-    console.log("handleChange");
-    const reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    setLoading(true)
-
-    reader.onloadend = () => {
-      uploadImage(reader.result);
-      setLoading(false)
-    };
-    reader.onerror = () => {
-      console.error("AHHHHHHHH!!");
-      setLoading(false)
-    };
-  };
+  const [progress, setProgress] = useState(0);
+  console.log(file);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -77,6 +69,10 @@ function Tutor(props) {
       });
   };
 
+  const handleChangeFile = (event) => {
+    setFile(URL.createObjectURL(event.target.files[0]));
+  };
+
   const uploadImage = async (base64EncodedImage) => {
     try {
       const res = await axios.post("/upload", { data: base64EncodedImage });
@@ -99,7 +95,7 @@ function Tutor(props) {
           width: "60%",
           flexDirection: "column",
           justifyContent: "center",
-          borderRadius:"16px",
+          borderRadius: "16px",
         }}
       >
         <h1 style={{ fontFamily: "Bungee Inline" }}>Tutor Profile</h1>
@@ -113,8 +109,9 @@ function Tutor(props) {
             isValid,
             errors,
           }) => (
-            <Form noValidate onSubmit={onSubmit} 
-            
+            <Form
+              noValidate
+              onSubmit={onSubmit}
               style={{
                 display: "flex",
                 margin: "auto",
@@ -124,12 +121,11 @@ function Tutor(props) {
                 width: "60%",
                 flexDirection: "column",
                 justifyContent: "center",
-                borderRadius:"16px",
-              
-              marginBottom:"100px"
-            }}>
+                borderRadius: "16px",
 
-
+                marginBottom: "100px",
+              }}
+            >
               <Form.Row>
                 <Form.Group as={Col} md="4">
                   <Form.Label>First name</Form.Label>
@@ -186,13 +182,15 @@ function Tutor(props) {
                 </Form.Group>
               </Form.Row>
 
-
-
-
               <Form.Row>
                 <Form.Group as={Col} md="4" controlId="formGridState">
                   <Form.Label>Subject</Form.Label>
-                  <Form.Control onChange={(e) => setSubject(e.target.value)} value={subject} as="select" defaultValue="Choose...">
+                  <Form.Control
+                    onChange={(e) => setSubject(e.target.value)}
+                    value={subject}
+                    as="select"
+                    defaultValue="Choose..."
+                  >
                     <option>Choose...</option>
                     <option>Math</option>
                     <option>Science</option>
@@ -200,7 +198,7 @@ function Tutor(props) {
                   </Form.Control>
                 </Form.Group>
 
-                <Form.Group as={Col} md="4" >
+                <Form.Group as={Col} md="4">
                   <Form.Label>available</Form.Label>
                   <Form.Control
                     type="date"
@@ -230,19 +228,20 @@ function Tutor(props) {
                     {errors.tel}
                   </Form.Control.Feedback>
                 </Form.Group>
-                  </Form.Row>
-                  <Form.Row>
-
-                
-                  <Form.Group as={Col} md="4" controlId="formGridState">
+              </Form.Row>
+              <Form.Row>
+                <Form.Group as={Col} md="4" controlId="formGridState">
                   <Form.Label>Gender</Form.Label>
-                  <Form.Control onChange={(e) => setGender(e.target.value)} value={gender} as="select" defaultValue="Choose...">
+                  <Form.Control
+                    onChange={(e) => setGender(e.target.value)}
+                    value={gender}
+                    as="select"
+                    defaultValue="Choose..."
+                  >
                     <option>Choose...</option>
                     <option>Male</option>
                     <option>Female</option>
                   </Form.Control>
-
-
                 </Form.Group>
                 <Form.Group as={Col} md="4">
                   <Form.Label>Graduate</Form.Label>
@@ -253,34 +252,35 @@ function Tutor(props) {
                     value={graduate}
                     onChange={(e) => setGraduate(e.target.detail)}
                     isInvalid={!!errors.detail}
-                    />
+                  />
 
                   <Form.Control.Feedback type="invalid" tooltip>
                     {errors.detail}
                   </Form.Control.Feedback>
                 </Form.Group>
               </Form.Row>
-              <input type="file" onChange={handleFile} />
+              <div>
+                <input type="file" onChange={handleChangeFile} />
+              </div>
 
               <Image
                 style={{
                   width: "200px",
                   height: "200px",
+                  objectFit: "cover"
                 }}
                 src={file}
                 roundedCircle
               />
-              <div style={{ marginBottom:"20px"}}>
 
-          <ProgressBar animated now={45} />
-              </div>
-              <Button disabled={loading} type="submit">Submit form</Button>
+              <Button disabled={loading} type="submit">
+                Submit form
+              </Button>
             </Form>
           )}
         </Formik>
-        
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
