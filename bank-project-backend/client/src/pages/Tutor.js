@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Form,
-  Col,
-  Button,
-  InputGroup,
-  Image,
-  ProgressBar,
-} from "react-bootstrap";
+import { Form, Col, Button, InputGroup, Image } from "react-bootstrap";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { withRouter } from "react-router-dom";
@@ -39,12 +32,11 @@ function Tutor(props) {
   const [detail, setDetail] = useState("");
   const [gender, setGender] = useState("");
   const [loading, setLoading] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [imgURL, setImgURL] = useState(0);
   console.log(file);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log("submiting", imageUrl);
     axios
       .post("/tutors/", {
         fname,
@@ -55,7 +47,7 @@ function Tutor(props) {
         email,
         detail,
         graduate,
-        img: imageUrl,
+        img: imgURL ,
         gender,
         // location,
       })
@@ -71,12 +63,18 @@ function Tutor(props) {
 
   const handleChangeFile = (event) => {
     setFile(URL.createObjectURL(event.target.files[0]));
+    let reader = new FileReader();
+    reader.onloadend = async function () {
+      setImgURL(await uploadImage(reader.result));
+    };
+    reader.readAsDataURL(event.target.files[0]);
   };
 
   const uploadImage = async (base64EncodedImage) => {
     try {
       const res = await axios.post("/upload", { data: base64EncodedImage });
-      setImageUrl(res.data.url);
+      console.log(res.data);
+      return res.data.url;
     } catch (err) {
       console.error(err);
     }
@@ -267,7 +265,7 @@ function Tutor(props) {
                 style={{
                   width: "200px",
                   height: "200px",
-                  objectFit: "cover"
+                  objectFit: "cover",
                 }}
                 src={file}
                 roundedCircle

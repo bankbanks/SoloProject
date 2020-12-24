@@ -67,6 +67,7 @@ function TutorList() {
                 <p>subject : {tutors.subject}</p>
                 <p>Tel : {tutors.tel}</p>
                 <p>graduate : {tutors.graduate}</p>
+                <p>available : {tutors.available}</p>
               </Card.Text>
               </div>
             </Card.Body>
